@@ -37,6 +37,7 @@ import type {
 import type { PokemonState } from "../types";
 
 const dex = Dex.forGen(9);
+const MAX_TOTAL_EV = 508;
 
 interface ActiveJob {
   requestId: string;
@@ -640,7 +641,7 @@ function adjustOpponentBulkConfig(
 
   const [nextHpMin, nextHpMax] = clampAround(evConfig.hpRange, baseHpEV);
   const [nextDefMin, nextDefMax] = clampAround(evConfig.defRange, baseDefEV);
-  const nextCombined = Math.min(evConfig.maxCombinedEV ?? 252, 252);
+  const nextCombined = Math.min(evConfig.maxCombinedEV ?? MAX_TOTAL_EV, MAX_TOTAL_EV);
 
   return {
     ...evConfig,
