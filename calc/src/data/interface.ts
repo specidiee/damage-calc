@@ -1,6 +1,6 @@
 export interface As<T> {__brand: T}
 export type ID = (string & As<'ID'>) | (string & { __isID: true }) | '';
-export type GenerationNum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type GenerationNum = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 export type GenderName = 'M' | 'F' | 'N';
 export type StatID = 'hp' | StatIDExceptHP;
 export type StatIDExceptHP = 'atk' | 'def' | 'spa' | 'spd' | 'spe';
@@ -127,7 +127,7 @@ export interface Move extends Data<MoveName> {
   readonly zMove?: {
     basePower?: number;
   };
-  readonly isMax?: boolean | string;
+  readonly isMax?: boolean | 'gmax';
   readonly maxMove?: {
     basePower: number;
   };
@@ -148,6 +148,7 @@ export interface Specie extends Data<SpeciesName> {
   readonly gender?: GenderName;
   readonly nfe?: boolean;
   readonly abilities?: {0: AbilityName | ''};
+  readonly canGigantamax?: MoveName;
   readonly otherFormes?: SpeciesName[];
   readonly baseSpecies?: SpeciesName;
 }

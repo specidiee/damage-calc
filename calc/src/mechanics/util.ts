@@ -30,12 +30,12 @@ const EV_ITEMS = [
 export function isGrounded(pokemon: Pokemon, field: Field) {
   return (field.isGravity || pokemon.hasItem('Iron Ball') ||
     (!pokemon.hasType('Flying') &&
-      !pokemon.hasAbility('Levitate') &&
+      !pokemon.hasAbility('Levitate', 'Eelevate') &&
       !pokemon.hasItem('Air Balloon')));
 }
 
 export function getModifiedStat(stat: number, mod: number, gen?: Generation) {
-  if (gen && gen.num < 3) {
+  if (gen && (gen.num === 1 || gen.num === 2)) {
     if (mod >= 0) {
       const pastGenBoostTable = [1, 1.5, 2, 2.5, 3, 3.5, 4];
       stat = Math.floor(stat * pastGenBoostTable[mod]);
@@ -128,7 +128,8 @@ export function getFinalSpeed(gen: Generation, pokemon: Pokemon, field: Field, s
 
   speed = OF32(pokeRound((speed * chainMods(speedMods, 410, 131172)) / 4096));
   if (pokemon.hasStatus('par') && !pokemon.hasAbility('Quick Feet')) {
-    speed = Math.floor(OF32(speed * (gen.num < 7 ? 25 : 50)) / 100);
+    // gen.num = 0 means it's Pokemon Champions
+    speed = Math.floor(OF32(speed * (gen.num >= 7 || gen.num === 0 ? 50 : 25)) / 100);
   }
 
   speed = Math.min(gen.num <= 2 ? 999 : 10000, speed);
@@ -260,13 +261,13 @@ export function checkDownload(source: Pokemon, target: Pokemon, wonderRoomActive
 }
 
 export function checkIntrepidSword(source: Pokemon, gen: Generation) {
-  if (source.hasAbility('Intrepid Sword') && gen.num > 7) {
+  if (source.hasAbility('Intrepid Sword') && (gen.num === 8 || source.abilityOn)) {
     source.boosts.atk = Math.min(6, source.boosts.atk + 1);
   }
 }
 
 export function checkDauntlessShield(source: Pokemon, gen: Generation) {
-  if (source.hasAbility('Dauntless Shield') && gen.num > 7) {
+  if (source.hasAbility('Dauntless Shield') && (gen.num === 8 || source.abilityOn)) {
     source.boosts.def = Math.min(6, source.boosts.def + 1);
   }
 }

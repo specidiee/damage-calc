@@ -25,7 +25,8 @@ function ExportPokemon(pokeInfo) {
 			finalText += "Tera Type: " + teraType + "\n";
 		}
 	}
-	if (gen > 2) {
+	if (pokeInfo.find(".gmaxToggle").prop("checked")) finalText += "Gigantamax: Yes \n";
+	if (gen === 0 || gen > 2) {
 		var EVs_Array = [];
 		for (var stat in pokemon.evs) {
 			var ev = pokemon.evs[stat] ? pokemon.evs[stat] : 0;
@@ -40,8 +41,10 @@ function ExportPokemon(pokeInfo) {
 			finalText += serialize(EVs_Array, " / ");
 			finalText += "\n";
 		}
+		if (pokemon.nature) {
+			finalText += pokemon.nature + " Nature" + "\n";
+		}
 	}
-	if (pokemon.nature && gen > 2) finalText += pokemon.nature + " Nature" + "\n";
 	var IVs_Array = [];
 	for (var stat in pokemon.ivs) {
 		var iv = pokemon.ivs[stat] ? pokemon.ivs[stat] : 0;
@@ -85,7 +88,7 @@ function serialize(array, separator) {
 	return text;
 }
 
-function statToLegacyStat(stat) {
+function statToLegacyStat(stat, gen) {
 	switch (stat) {
 	case 'hp':
 		return "hp";
@@ -94,6 +97,9 @@ function statToLegacyStat(stat) {
 	case 'def':
 		return "df";
 	case 'spa':
+		if (gen == 1) {
+			return "sl";
+		}
 		return "sa";
 	case 'spd':
 		return "sd";
@@ -142,6 +148,7 @@ function getStats(currentPoke, rows, x) {
 		var currentRow = rows[x] ? rows[x].split(/[/:]/) : '';
 		var evs = {};
 		var ivs = {};
+		var dvs = {};
 		var ev;
 		var ability;
 		var teraType;
@@ -152,20 +159,36 @@ function getStats(currentPoke, rows, x) {
 			currentPoke.level = parseInt(currentRow[1].trim());
 			break;
 		case 'EVs':
+			if (gen === 1) {
+				evs['hp'] = 0;
+				evs['at'] = 0;
+				evs['df'] = 0;
+				evs['sl'] = 0;
+				evs['sp'] = 0;
+			} else if (gen === 2) {
+				evs['hp'] = 0;
+				evs['at'] = 0;
+				evs['df'] = 0;
+				evs['sa'] = 0;
+				evs['sd'] = 0;
+				evs['sp'] = 0;
+			}
 			for (j = 1; j < currentRow.length; j++) {
 				currentEV = currentRow[j].trim().split(" ");
-				currentEV[1] = statToLegacyStat(currentEV[1].toLowerCase());
+				currentEV[1] = statToLegacyStat(currentEV[1].toLowerCase(), gen);
 				evs[currentEV[1]] = parseInt(currentEV[0]);
 			}
-			currentPoke.evs = evs;
+			currentPoke[$('#champions').prop('checked') ? 'sps' : 'evs'] = evs;
 			break;
 		case 'IVs':
 			for (j = 1; j < currentRow.length; j++) {
 				currentIV = currentRow[j].trim().split(" ");
-				currentIV[1] = statToLegacyStat(currentIV[1].toLowerCase());
-				ivs[currentIV[1]] = parseInt(currentIV[0]);
+				currentIV[1] = statToLegacyStat(currentIV[1].toLowerCase(), gen);
+				if (gen === 1 || gen === 2) dvs[currentIV[1]] = Math.floor(parseInt(currentIV[0]) / 2);
+				else ivs[currentIV[1]] = parseInt(currentIV[0]);
 			}
-			currentPoke.ivs = ivs;
+			if (gen === 1 || gen === 2) currentPoke.dvs = dvs;
+			else currentPoke.ivs = ivs;
 			break;
 		case 'Ability':
 			ability = currentRow[1] ? currentRow[1].trim() : '';
@@ -174,6 +197,9 @@ function getStats(currentPoke, rows, x) {
 		case 'Tera Type':
 			teraType = currentRow[1] ? currentRow[1].trim() : '';
 			if (Object.keys(calc.TYPE_CHART[9]).slice(1).indexOf(teraType) !== -1) currentPoke.teraType = teraType;
+			break;
+		case 'Gigantamax':
+			if (currentRow[1].trim() === "Yes") currentPoke.isGmax = true;
 			break;
 		}
 
@@ -215,6 +241,7 @@ function addToDex(poke) {
 		if (GEN2RANDOMBATTLE[poke.name] == undefined) GEN2RANDOMBATTLE[poke.name] = {};
 		if (GEN1RANDOMBATTLE[poke.name] == undefined) GEN1RANDOMBATTLE[poke.name] = {};
 	} else {
+		if (SETDEX_CHAMPIONS[poke.name] == undefined) SETDEX_CHAMPIONS[poke.name] = {};
 		if (SETDEX_SV[poke.name] == undefined) SETDEX_SV[poke.name] = {};
 		if (SETDEX_SS[poke.name] == undefined) SETDEX_SS[poke.name] = {};
 		if (SETDEX_SM[poke.name] == undefined) SETDEX_SM[poke.name] = {};
@@ -231,9 +258,14 @@ function addToDex(poke) {
 	if (poke.teraType !== undefined) {
 		dexObject.teraType = poke.teraType;
 	}
+	dexObject.isGmax = poke.isGmax;
 	dexObject.level = poke.level;
 	dexObject.evs = poke.evs;
 	dexObject.ivs = poke.ivs;
+	dexObject.dvs = poke.dvs;
+	if (poke.sps !== undefined) {
+		dexObject.sps = poke.sps;
+	}
 	dexObject.moves = poke.moves;
 	dexObject.nature = poke.nature;
 	dexObject.gender = poke.gender;
@@ -261,6 +293,8 @@ function addToDex(poke) {
 function updateDex(customsets) {
 	for (var pokemon in customsets) {
 		for (var moveset in customsets[pokemon]) {
+			if (!SETDEX_CHAMPIONS[pokemon]) SETDEX_CHAMPIONS[pokemon] = {};
+			SETDEX_CHAMPIONS[pokemon][moveset] = customsets[pokemon][moveset];
 			if (!SETDEX_SV[pokemon]) SETDEX_SV[pokemon] = {};
 			SETDEX_SV[pokemon][moveset] = customsets[pokemon][moveset];
 			if (!SETDEX_SS[pokemon]) SETDEX_SS[pokemon] = {};
@@ -300,6 +334,7 @@ function addSets(pokes, name) {
 			currentPoke.item = getItem(currentRow, species.offset + 1);
 			currentPoke = getStats(currentPoke, rows, i + 1);
 			currentPoke = getMoves(currentPoke, rows, i + 1);
+			if (currentRow[species.offset].trim().endsWith('-Gmax')) currentPoke.isGmax = true;
 			if (species.offset === 1 && currentRow[0].trim()) {
 				currentPoke.nameProp = currentRow[0].trim();
 			} else {
@@ -319,6 +354,9 @@ function addSets(pokes, name) {
 }
 
 function checkExceptionsImport(poke) {
+	if (poke.endsWith('-Gmax')) {
+		poke = poke.slice(0, -5);
+	}
 	switch (poke) {
 	case 'Alcremie-Vanilla-Cream':
 	case 'Alcremie-Ruby-Cream':

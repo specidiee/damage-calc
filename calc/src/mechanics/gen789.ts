@@ -142,7 +142,7 @@ export function calculateSMSSSV(
   }
 
   const breaksProtect = move.breaksProtect || move.isZ || attacker.isDynamaxed ||
-  (attacker.hasAbility('Unseen Fist') && move.flags.contact);
+  (attacker.hasAbility('Unseen Fist', 'Piercing Drill') && move.flags.contact);
 
   if (field.defenderSide.isProtected && !breaksProtect) {
     desc.isProtected = true;
@@ -160,24 +160,24 @@ export function calculateSMSSSV(
     'Armor Tail', 'Aroma Veil', 'Aura Break', 'Battle Armor',
     'Big Pecks', 'Bulletproof', 'Clear Body', 'Contrary',
     'Damp', 'Dazzling', 'Disguise', 'Dry Skin',
-    'Earth Eater', 'Filter', 'Flash Fire', 'Flower Gift',
-    'Flower Veil', 'Fluffy', 'Friend Guard', 'Fur Coat',
-    'Good as Gold', 'Grass Pelt', 'Guard Dog', 'Heatproof',
-    'Heavy Metal', 'Hyper Cutter', 'Ice Face', 'Ice Scales',
-    'Illuminate', 'Immunity', 'Inner Focus', 'Insomnia',
-    'Keen Eye', 'Leaf Guard', 'Levitate', 'Light Metal',
-    'Lightning Rod', 'Limber', 'Magic Bounce', 'Magma Armor',
-    'Marvel Scale', "Mind's Eye", 'Mirror Armor', 'Motor Drive',
-    'Multiscale', 'Oblivious', 'Overcoat', 'Own Tempo',
-    'Pastel Veil', 'Punk Rock', 'Purifying Salt', 'Queenly Majesty',
-    'Sand Veil', 'Sap Sipper', 'Shell Armor', 'Shield Dust',
-    'Simple', 'Snow Cloak', 'Solid Rock', 'Soundproof',
-    'Sticky Hold', 'Storm Drain', 'Sturdy', 'Suction Cups',
-    'Sweet Veil', 'Tangled Feet', 'Telepathy', 'Tera Shell',
-    'Thermal Exchange', 'Thick Fat', 'Unaware', 'Vital Spirit',
-    'Volt Absorb', 'Water Absorb', 'Water Bubble', 'Water Veil',
-    'Well-Baked Body', 'White Smoke', 'Wind Rider', 'Wonder Guard',
-    'Wonder Skin'
+    'Earth Eater', 'Eelevate', 'Filter', 'Flash Fire',
+    'Flower Gift', 'Flower Veil', 'Fluffy', 'Friend Guard',
+    'Fur Coat', 'Good as Gold', 'Grass Pelt', 'Guard Dog',
+    'Heatproof', 'Heavy Metal', 'Hyper Cutter', 'Ice Face',
+    'Ice Scales', 'Illuminate', 'Immunity', 'Inner Focus',
+    'Insomnia', 'Keen Eye', 'Leaf Guard', 'Levitate',
+    'Light Metal', 'Lightning Rod', 'Limber', 'Magic Bounce',
+    'Magma Armor', 'Marvel Scale', "Mind's Eye", 'Mirror Armor',
+    'Motor Drive', 'Multiscale', 'Oblivious', 'Overcoat',
+    'Own Tempo', 'Pastel Veil', 'Punk Rock', 'Purifying Salt',
+    'Queenly Majesty', 'Sand Veil', 'Sap Sipper', 'Shell Armor',
+    'Shield Dust', 'Simple', 'Snow Cloak', 'Solid Rock',
+    'Soundproof', 'Sticky Hold', 'Storm Drain', 'Sturdy',
+    'Suction Cups', 'Sweet Veil', 'Tangled Feet', 'Telepathy',
+    'Tera Shell', 'Thermal Exchange', 'Thick Fat', 'Unaware',
+    'Vital Spirit', 'Volt Absorb', 'Water Absorb', 'Water Bubble',
+    'Water Veil', 'Well-Baked Body', 'White Smoke', 'Wind Rider',
+    'Wonder Guard', 'Wonder Skin'
   );
 
   const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker', 'Teravolt', 'Turboblaze');
@@ -238,13 +238,14 @@ export function calculateSMSSSV(
   let type = move.type;
   if (move.originalName === 'Weather Ball') {
     const holdingUmbrella = attacker.hasItem('Utility Umbrella');
+    const isMegaSol = attacker.hasAbility('Mega Sol');
     type =
-      field.hasWeather('Sun', 'Harsh Sunshine') && !holdingUmbrella ? 'Fire'
+      (field.hasWeather('Sun', 'Harsh Sunshine') || isMegaSol) && !holdingUmbrella ? 'Fire'
       : field.hasWeather('Rain', 'Heavy Rain') && !holdingUmbrella ? 'Water'
       : field.hasWeather('Sand') ? 'Rock'
       : field.hasWeather('Hail', 'Snow') ? 'Ice'
       : 'Normal';
-    desc.weather = field.weather;
+    isMegaSol ? desc.attackerAbility = attacker.ability : desc.weather = field.weather;
     desc.moveType = type;
   } else if (move.named('Judgment') && attacker.item && attacker.item.includes('Plate')) {
     type = getItemBoostType(attacker.item)!;
@@ -287,29 +288,31 @@ export function calculateSMSSSV(
   } else if (move.originalName === 'Revelation Dance') {
     if (attacker.teraType) {
       type = attacker.teraType;
+    } else if (attacker.types[0] === '???' && attacker.types[1]) {
+      type = attacker.types[1];
     } else {
       type = attacker.types[0];
     }
-  } else if (move.named('Aura Wheel')) {
-    if (attacker.named('Morpeko')) {
-      type = 'Electric';
-    } else if (attacker.named('Morpeko-Hangry')) {
-      type = 'Dark';
-    }
+  } else if (move.named('Aura Wheel') && attacker.named('Morpeko-Hangry')) {
+    type = 'Dark';
   } else if (move.named('Raging Bull')) {
-    if (attacker.named('Tauros-Paldea-Combat')) {
-      type = 'Fighting';
-    } else if (attacker.named('Tauros-Paldea-Blaze')) {
-      type = 'Fire';
+    if (attacker.named('Tauros')) {
+      type = 'Normal';
     } else if (attacker.named('Tauros-Paldea-Aqua')) {
       type = 'Water';
+    } else if (attacker.named('Tauros-Paldea-Blaze')) {
+      type = 'Fire';
+    } else if (attacker.named('Tauros-Paldea-Combat')) {
+      type = 'Fighting';
     }
 
     field.defenderSide.isReflect = false;
     field.defenderSide.isLightScreen = false;
     field.defenderSide.isAuroraVeil = false;
   } else if (move.named('Ivy Cudgel')) {
-    if (attacker.name.includes('Ogerpon-Cornerstone')) {
+    if (attacker.named('Ogerpon') || attacker.name.includes('Ogerpon-Teal')) {
+      type = 'Grass';
+    } else if (attacker.name.includes('Ogerpon-Cornerstone')) {
       type = 'Rock';
     } else if (attacker.name.includes('Ogerpon-Hearthflame')) {
       type = 'Fire';
@@ -334,6 +337,7 @@ export function calculateSMSSSV(
   let isGalvanize = false;
   let isLiquidVoice = false;
   let isNormalize = false;
+  let isDragonize = false;
   const noTypeChange = move.named(
     'Revelation Dance',
     'Judgment',
@@ -360,8 +364,10 @@ export function calculateSMSSSV(
       type = 'Ice';
     } else if ((isNormalize = attacker.hasAbility('Normalize'))) { // Boosts any type
       type = 'Normal';
+    } else if ((isDragonize = attacker.hasAbility('Dragonize')) && normal) {
+      type = 'Dragon';
     }
-    if (isGalvanize || isPixilate || isRefrigerate || isAerilate || isNormalize) {
+    if (isGalvanize || isPixilate || isRefrigerate || isAerilate || isNormalize || isDragonize) {
       desc.attackerAbility = attacker.ability;
       hasAteAbilityTypeChange = true;
     } else if (isLiquidVoice) {
@@ -477,7 +483,7 @@ export function calculateSMSSSV(
         defender.hasAbility('Lightning Rod', 'Motor Drive', 'Volt Absorb')) ||
       (move.hasType('Ground') &&
         !field.isGravity && !move.named('Thousand Arrows') &&
-        !defender.hasItem('Iron Ball') && defender.hasAbility('Levitate')) ||
+        !defender.hasItem('Iron Ball') && defender.hasAbility('Levitate', 'Eelevate')) ||
       (move.flags.bullet && defender.hasAbility('Bulletproof')) ||
       (move.flags.sound && !move.named('Clangorous Soul') && defender.hasAbility('Soundproof')) ||
       (move.priority > 0 && defender.hasAbility('Queenly Majesty', 'Dazzling', 'Armor Tail')) ||
@@ -642,7 +648,9 @@ export function calculateSMSSSV(
 
   let protect = false;
   if (field.defenderSide.isProtected &&
-    (attacker.isDynamaxed || (move.isZ && attacker.item && attacker.item.includes(' Z')))) {
+    (attacker.isDynamaxed ||
+      attacker.hasAbility('Unseen Fist', 'Piercing Drill') ||
+      (move.isZ && attacker.item && attacker.item.includes(' Z')))) {
     protect = true;
     desc.isProtected = true;
   }
@@ -692,7 +700,9 @@ export function calculateSMSSSV(
       // Check if lost -ate ability. Typing stays the same, only boost is lost
       // Cannot be regained during multihit move and no Normal moves with stat drawbacks
       hasAteAbilityTypeChange = hasAteAbilityTypeChange &&
-        attacker.hasAbility('Aerilate', 'Galvanize', 'Pixilate', 'Refrigerate', 'Normalize');
+        attacker.hasAbility(
+          'Aerilate', 'Galvanize', 'Pixilate', 'Refrigerate', 'Normalize', 'Dragonize'
+        );
 
       if (move.timesUsed! > 1) {
         // Adaptability does not change between hits of a multihit, only between turns
@@ -858,9 +868,11 @@ export function calculateBasePowerSMSSSV(
     desc.moveBP = basePower;
     break;
   case 'Weather Ball':
-    basePower = move.bp * (field.weather && !field.hasWeather('Strong Winds') ? 2 : 1);
+    const isStrongWinds = field.hasWeather('Strong Winds');
+    const isMegaSol = attacker.hasAbility('Mega Sol');
+    basePower = move.bp * ((field.weather && !isStrongWinds) || isMegaSol ? 2 : 1);
     if (field.hasWeather('Sun', 'Harsh Sunshine', 'Rain', 'Heavy Rain') &&
-      attacker.hasItem('Utility Umbrella')) basePower = move.bp;
+      attacker.hasItem('Utility Umbrella') && !isMegaSol) basePower = move.bp;
     desc.moveBP = basePower;
     break;
   case 'Terrain Pulse':
@@ -1191,7 +1203,7 @@ export function calculateBPModsSMSSSV(
     (attacker.hasAbility('Sand Force') &&
       field.hasWeather('Sand') && move.hasType('Rock', 'Ground', 'Steel')) ||
     (attacker.hasAbility('Analytic') &&
-      (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out')) ||
+      (turnOrder !== 'first' || field.defenderSide.isSwitching === 'out' || attacker.abilityOn)) ||
     (attacker.hasAbility('Tough Claws') && move.flags.contact) ||
     (attacker.hasAbility('Punk Rock') && move.flags.sound)
   ) {
@@ -1390,7 +1402,8 @@ export function calculateAtModsSMSSSV(
   } else if (
     (attacker.hasAbility('Steelworker') && move.hasType('Steel')) ||
     (attacker.hasAbility('Dragon\'s Maw') && move.hasType('Dragon')) ||
-    (attacker.hasAbility('Rocky Payload') && move.hasType('Rock'))
+    (attacker.hasAbility('Rocky Payload') && move.hasType('Rock')) ||
+    (attacker.hasAbility('Fire Mane') && move.hasType('Fire'))
   ) {
     atMods.push(6144);
     desc.attackerAbility = attacker.ability;
@@ -1657,24 +1670,27 @@ function calculateBaseDamageSMSSSV(
     baseDamage = pokeRound(OF32(baseDamage * 1024) / 4096);
   }
 
+  const isMegaSol = attacker.hasAbility('Mega Sol');
   if (
-    field.hasWeather('Sun') && move.named('Hydro Steam') && !attacker.hasItem('Utility Umbrella')
+    (field.hasWeather('Sun') || isMegaSol) &&
+      move.named('Hydro Steam') &&
+      !attacker.hasItem('Utility Umbrella')
   ) {
     baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
-    desc.weather = field.weather;
+    isMegaSol ? desc.attackerAbility = attacker.ability : desc.weather = field.weather;
   } else if (!defender.hasItem('Utility Umbrella')) {
     if (
-      (field.hasWeather('Sun', 'Harsh Sunshine') && move.hasType('Fire')) ||
-      (field.hasWeather('Rain', 'Heavy Rain') && move.hasType('Water'))
+      ((field.hasWeather('Sun', 'Harsh Sunshine') || isMegaSol) && move.hasType('Fire')) ||
+      ((field.hasWeather('Rain', 'Heavy Rain') && !isMegaSol) && move.hasType('Water'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 6144) / 4096);
-      desc.weather = field.weather;
+      isMegaSol ? desc.attackerAbility = attacker.ability : desc.weather = field.weather;
     } else if (
-      (field.hasWeather('Sun') && move.hasType('Water')) ||
+      ((field.hasWeather('Sun') || isMegaSol) && move.hasType('Water')) ||
       (field.hasWeather('Rain') && move.hasType('Fire'))
     ) {
       baseDamage = pokeRound(OF32(baseDamage * 2048) / 4096);
-      desc.weather = field.weather;
+      isMegaSol ? desc.attackerAbility = attacker.ability : desc.weather = field.weather;
     }
   }
 

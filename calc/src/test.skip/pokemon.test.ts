@@ -75,7 +75,7 @@ describe('Pokemon', () => {
     // HP DV should be derived
     expect(p.ivs).toEqual({hp: 20, atk: 31, def: 16, spa: 20, spd: 20, spe: 31});
     expect(p.evs).toEqual({hp: 252, atk: 200, def: 252, spa: 252, spd: 252, spe: 252});
-    expect(p.stats).toEqual({hp: 343, atk: 298, def: 274, spa: 228, spd: 228, spe: 318});
+    expect(p.stats).toEqual({hp: 343, atk: 285, def: 274, spa: 228, spd: 228, spe: 318});
 
     // curHP() capped to maxHP
     expect(p.curHP()).toBe(p.maxHP());
@@ -111,11 +111,5 @@ describe('Pokemon', () => {
     expect(p.hasType('Poison')).toBe(true);
     expect(p.hasType('Fire')).toBe(false);
     expect(p.hasType('Ice')).toBe(false);
-  });
-
-  test('Gigantamx weights', () => {
-    expect(new Pokemon(8, 'Venusaur-Gmax').weightkg).toBe(100);
-    expect(new Pokemon(8, 'Venusaur-Gmax', {isDynamaxed: true}).weightkg).toBe(0);
-    expect(new Pokemon(8, 'Venusaur-Gmax', {overrides: {weightkg: 50}}).weightkg).toBe(50);
   });
 });

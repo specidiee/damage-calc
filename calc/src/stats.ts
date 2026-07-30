@@ -98,6 +98,14 @@ export const Stats = new (class {
     return dv * 2;
   }
 
+  EVToStatEXP(ev: number) {
+    return (ev - 1) * (ev - 1) + 1;
+  }
+
+  StatEXPToEv(statexp: number) {
+    return Math.floor((Math.sqrt(statexp - 1) + 1) / 4) * 4;
+  }
+
   DVsToIVs(dvs: Readonly<Partial<StatsTable>>) {
     const ivs: Partial<StatsTable> = {};
     let dv: StatID;
@@ -116,9 +124,38 @@ export const Stats = new (class {
     level: number,
     nature?: string
   ) {
-    if (gen.num < 1 || gen.num > 9) throw new Error(`Invalid generation ${gen.num}`);
-    if (gen.num < 3) return this.calcStatRBY(stat, base, iv, level);
+    if (gen.num < 0 || gen.num > 9) throw new Error(`Invalid generation ${gen.num}`);
+    if (gen.num === 0) return this.calcStatChampions(gen.natures, stat, base, ev, nature);
+    if (gen.num < 3) return this.calcStatRBY(stat, base, iv, ev, level);
     return this.calcStatADV(gen.natures, stat, base, iv, ev, level, nature);
+  }
+
+  calcStatChampions(
+    natures: Natures,
+    stat: StatID,
+    base: number,
+    sp: number,
+    nature?: string
+  ) {
+    if (stat === 'hp') {
+      return base === 1
+        ? base
+        : base + sp + 75;
+    }
+    let mods: [StatID?, StatID?] = [undefined, undefined];
+    if (nature) {
+      const nat = natures.get(toID(nature));
+      mods = [nat?.plus, nat?.minus];
+    }
+    const n =
+        mods[0] === stat && mods[1] === stat
+          ? 1
+          : mods[0] === stat
+            ? 1.1
+            : mods[1] === stat
+              ? 0.9
+              : 1;
+    return Math.floor(n * (base + sp + 20));
   }
 
   calcStatADV(
@@ -153,15 +190,17 @@ export const Stats = new (class {
     }
   }
 
-  calcStatRBY(stat: StatID, base: number, iv: number, level: number) {
-    return this.calcStatRBYFromDV(stat, base, this.IVToDV(iv), level);
+  calcStatRBY(stat: StatID, base: number, iv: number, ev: number, level: number) {
+    return this.calcStatRBYFromDV(stat, base, this.IVToDV(iv), this.EVToStatEXP(ev), level);
   }
 
-  calcStatRBYFromDV(stat: StatID, base: number, dv: number, level: number) {
+  calcStatRBYFromDV(stat: StatID, base: number, dv: number, statexp: number, level: number) {
     if (stat === 'hp') {
-      return Math.floor((((base + dv) * 2 + 63) * level) / 100) + level + 10;
+      return Math.floor((((base + dv) * 2 + Math.floor((Math.sqrt(statexp - 1) + 1) / 4)) *
+      level) / 100) + level + 10;
     } else {
-      return Math.floor((((base + dv) * 2 + 63) * level) / 100) + 5;
+      return Math.floor((((base + dv) * 2 + Math.floor((Math.sqrt(statexp - 1) + 1) / 4)) *
+      level) / 100) + 5;
     }
   }
 

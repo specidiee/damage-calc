@@ -75,8 +75,9 @@
             <input class="mode visually-hidden" type="radio" name="mode" id="one-vs-one" /><label class="btn btn-left btn-wide" for="one-vs-one">One vs One</label>
             <input class="mode visually-hidden" type="radio" name="mode" id="one-vs-all" /><label class="btn btn-mid btn-wide gen-specific g3 g4 g5 g6 g7 g8 g9" for="one-vs-all">One vs All</label>
             <input class="mode visually-hidden" type="radio" name="mode" id="all-vs-one" /><label class="btn btn-mid btn-wide gen-specific g3 g4 g5 g6 g7 g8 g9" for="all-vs-one">All vs One</label>
-            <input class="mode visually-hidden" type="radio" name="mode" id="randoms" checked="checked" /><label class="btn btn-mid btn-xwide" for="randoms">Random Battles</label>
-            <input class="mode visually-hidden" type="radio" name="mode" id="oms" /><label class="btn btn-right btn-xwide" for="oms">Other Metagames</label>
+            <input class="mode visually-hidden" type="radio" name="mode" id="champions" /><label class="btn btn-mid btn-wide" for="champions">Champions</label>
+            <input class="mode visually-hidden" type="radio" name="mode" id="randoms" checked="checked" /><label class="btn btn-mid btn-wide" for="randoms">Random Battles</label>
+            <input class="mode visually-hidden" type="radio" name="mode" id="oms" /><label class="btn btn-right btn-wide" for="oms">Other Metagames</label>
         </span>
     </div>
     <hr />
@@ -171,6 +172,10 @@
                     <select class="gender calc-trigger"><option value="">(Select)</option><option value="M">Male</option><option value="F">Female</option><option value="N">Genderless</option></select>
                 </div>
                 <div>
+                    <label>G-Max</label>
+                    <input type="checkbox" title= "Does this Pok&eacute;mon have the Gigantamax Factor?" class="gmaxToggle calc-trigger">
+                </div>
+                <div>
                     <label for="levelL1">Level</label>
                     <!--
                     We use inputmode="decimal" so that mobile devices will have a numpad appear when inputting values.
@@ -190,7 +195,7 @@
                             <th></th>
                             <th scope="col">Base</th>
                             <th class="gen-specific g3 g4 g5 g6 g7 g8 g9" scope="col">IVs</th>
-                            <th class="gen-specific g3 g4 g5 g6 g7 g8 g9" scope="col">EVs</th>
+                            <th scope="col">EVs</th>
                             <th class="gen-specific g1 g2 hide" scope="col">DVs</th>
                             <th></th>
                             <th></th>
@@ -207,7 +212,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -227,7 +232,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -263,7 +268,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -299,7 +304,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -335,7 +340,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -367,6 +372,9 @@
                             </th>
                             <td>
                                 <input class="base calc-trigger" value="100" inputmode="decimal" />
+                            </td>
+                            <td>
+                                <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td>
                                 <input class="dvs calc-trigger" value="15" inputmode="decimal" />
@@ -401,7 +409,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -541,10 +549,9 @@
                 <label for="currentHpL1">Current HP</label>
                 <input class="current-hp calc-trigger" id="currentHpL1" value="341" />/<span class="max-hp">341</span> (
                 <input class="percent-hp calc-trigger" value="100" />%)
-					 <input class="visually-hidden max calc-trigger btn-input" type="checkbox" id="maxL" />
-					 <label class="btn btn-xwide gen-specific g8 hide" for="maxL"
-					 title="Use the corresponding Max Move?">Dynamax</label>
-					 <br />
+                <input class="visually-hidden max calc-trigger btn-input" type="checkbox" id="maxL" />
+                <label class="btn max-btn gen-specific g8 hide" for="maxL" title="Use the corresponding Max Move?">Dynamax</label>
+                <br />
                 <br />
                 Health <div class="hpbar"></div>
             </div>
@@ -585,6 +592,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move2">
@@ -621,6 +633,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move3">
@@ -657,6 +674,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move4">
@@ -693,6 +715,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="pool move-pool gen-specific g1 g2 g3 g4 g5 g6 g7 g8 g9">
@@ -1070,6 +1097,10 @@
                     <select class="gender calc-trigger"><option value="">(Select)</option><option value="M">Male</option><option value="F">Female</option><option value="N">Genderless</option></select>
                 </div>
                 <div>
+                    <label>G-Max</label>
+                    <input type="checkbox" title= "Does this Pok&eacute;mon have the Gigantamax Factor?" class="gmaxToggle calc-trigger">
+                </div>
+                <div>
                     <label for="levelR1">Level</label>
                     <input class="level calc-trigger" id="levelR1" value="100" inputmode="decimal" />
                 </div>
@@ -1085,7 +1116,7 @@
                             <th></th>
                             <th scope="col">Base</th>
                             <th class="gen-specific g3 g4 g5 g6 g7 g8 g9" scope="col">IVs</th>
-                            <th class="gen-specific g3 g4 g5 g6 g7 g8 g9" scope="col">EVs</th>
+                            <th scope="col">EVs</th>
                             <th class="gen-specific g1 g2 hide" scope="col">DVs</th>
                             <th></th>
                             <th></th>
@@ -1102,7 +1133,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1122,7 +1153,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1158,7 +1189,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1194,7 +1225,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1230,7 +1261,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1262,6 +1293,9 @@
                             </th>
                             <td>
                                 <input class="base calc-trigger" value="100" inputmode="decimal" />
+                            </td>
+                            <td>
+                                <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td>
                                 <input class="dvs calc-trigger" value="15" inputmode="decimal" />
@@ -1296,7 +1330,7 @@
                             <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
                                 <input class="ivs calc-trigger" value="31" inputmode="decimal" />
                             </td>
-                            <td class="gen-specific g3 g4 g5 g6 g7 g8 g9">
+                            <td>
                                 <input class="evs calc-trigger" type="number" min="0" max="252" step="4" value="0" inputmode="decimal" />
                             </td>
                             <td class="gen-specific g1 g2 hide">
@@ -1436,10 +1470,9 @@
                 <label for="currentHpR1">Current HP</label>
                 <input class="current-hp calc-trigger" id="currentHpR1" value="341" />/<span class="max-hp">341</span> (
                 <input class="percent-hp calc-trigger" value="100" />%)
-					 <input class="visually-hidden max calc-trigger btn-input" type="checkbox" id="maxR" />
-					 <label class="btn btn-xwide gen-specific g8 hide" for="maxR"
-					 title="Use the corresponding Max Move?">Dynamax</label>
-					 <br />
+                <input class="visually-hidden max calc-trigger btn-input" type="checkbox" id="maxR" />
+                <label class="btn max-btn gen-specific g8 hide" for="maxR" title="Use the corresponding Max Move?">Dynamax</label>
+                <br />
                 <br />
                 Health <div class="hpbar"></div>
             </div>
@@ -1477,6 +1510,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move2">
@@ -1513,6 +1551,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move3">
@@ -1549,6 +1592,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class="move4">
@@ -1585,6 +1633,11 @@
                     <option value="3">3 times</option>
                     <option value="4">4 times</option>
                     <option value="5">5 times</option>
+                    <option class="gen-specific g4" value="6">6 times</option>
+                    <option class="gen-specific g4" value="7">7 times</option>
+                    <option class="gen-specific g4" value="8">8 times</option>
+                    <option class="gen-specific g4" value="9">9 times</option>
+                    <option class="gen-specific g4" value="10">10 times</option>
                 </select>
             </div>
             <div class ="move-pool pool gen-specific g1 g2 g3 g4 g5 g6 g7 g8 g9">
