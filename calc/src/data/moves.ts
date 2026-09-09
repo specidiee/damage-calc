@@ -5468,6 +5468,10 @@ const CHAMPIONS_PATCH: {[name: string]: DeepPartial<MoveData>} = {
   'Shadow Claw': {isSlicing: true},
   'Snap Trap': {type: 'Steel'},
   'Snipe Shot': {bp: 85},
+  // pokemoem: M-C(2026-09-09) 밸런스 패치 — serebii attackdex-champions 대조
+  'Meteor Assault': {bp: 170},
+  'Slash': {bp: 80},
+  'Double Shock': {isPunch: true},
   'Spirit Shackle': {bp: 90},
   'Triple Dive': {bp: 35},
   'Trop Kick': {bp: 85},
