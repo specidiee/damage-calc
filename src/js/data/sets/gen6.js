@@ -780,7 +780,8 @@ var SETDEX_XY = {
     "Battle Spot Singles Wallbreaker": {"level":50,"ability":"Rain Dish","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"df":4,"sa":252},"moves":["Water Pulse","Aura Sphere","Ice Beam","Dark Pulse"]},
     "Battle Spot Doubles Special Attacker": {"level":50,"ability":"Rain Dish","item":"Blastoisinite","nature":"Timid","evs":{"hp":4,"sa":252,"sp":252},"moves":["Water Spout","Aura Sphere","Ice Beam","Protect"]},
     "1v1 Standard": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"sa":252,"sd":4},"moves":["Fake Out","Hydro Cannon","Dark Pulse","Aura Sphere"]},
-    "1v1 Anti-Porygon-Z": {"ability":"Torrent","item":"Blastoisinite","nature":"Modest","evs":{"hp":136,"sa":100,"sd":152,"sp":120},"moves":["Hydro Cannon","Fake Out","Dragon Pulse","Aura Sphere"]}
+    "1v1 Anti-Porygon-Z": {"ability":"Torrent","item":"Blastoisinite","nature":"Modest","evs":{"hp":136,"sa":100,"sd":152,"sp":120},"moves":["Hydro Cannon","Fake Out","Dragon Pulse","Aura Sphere"]},
+    "OU Showdown Usage": {"ability":"Torrent","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"sa":252,"sp":4},"moves":["Aura Sphere","Dark Pulse","Ice Beam","Water Pulse"]}
   },
   "Blastoise-Mega": {
     "UU Offensive Spinner": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":184,"sa":252,"sp":72},"moves":["Rapid Spin","Scald","Dark Pulse","Ice Beam"]},
@@ -789,7 +790,8 @@ var SETDEX_XY = {
     "Battle Spot Singles Wallbreaker": {"level":50,"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"df":4,"sa":252},"moves":["Water Pulse","Aura Sphere","Ice Beam","Dark Pulse"]},
     "Battle Spot Doubles Special Attacker": {"level":50,"ability":"Mega Launcher","item":"Blastoisinite","nature":"Timid","evs":{"hp":4,"sa":252,"sp":252},"moves":["Water Spout","Aura Sphere","Ice Beam","Protect"]},
     "1v1 Standard": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"sa":252,"sd":4},"moves":["Fake Out","Hydro Cannon","Dark Pulse","Aura Sphere"]},
-    "1v1 Anti-Porygon-Z": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":136,"sa":100,"sd":152,"sp":120},"moves":["Hydro Cannon","Fake Out","Dragon Pulse","Aura Sphere"]}
+    "1v1 Anti-Porygon-Z": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":136,"sa":100,"sd":152,"sp":120},"moves":["Hydro Cannon","Fake Out","Dragon Pulse","Aura Sphere"]},
+    "OU Showdown Usage": {"ability":"Mega Launcher","item":"Blastoisinite","nature":"Modest","evs":{"hp":252,"sa":252,"sp":4},"moves":["Aura Sphere","Dark Pulse","Ice Beam","Water Pulse"]}
   },
   "Butterfree": {
     "PU Quiver Dance": {"ability":"Tinted Lens","item":"Life Orb","nature":"Timid","evs":{"df":4,"sa":252,"sp":252},"moves":["Sleep Powder","Quiver Dance","Bug Buzz","Energy Ball"]},
@@ -1588,7 +1590,6 @@ var SETDEX_XY = {
     "NU Supportive Pivot": {"ability":"Volt Absorb","item":"Leftovers","nature":"Calm","evs":{"hp":40,"df":140,"sd":208,"sp":120},"moves":["Scald","Volt Switch","Heal Bell","Toxic"]},
     "NU Choice Specs": {"ability":"Volt Absorb","item":"Choice Specs","nature":"Modest","ivs":{"at":30,"sa":30},"evs":{"sa":252,"sd":72,"sp":184},"moves":["Hydro Pump","Volt Switch","Ice Beam","Hidden Power Grass"]},
     "Monotype Support (Water)": {"ability":"Volt Absorb","item":"Leftovers","nature":"Calm","evs":{"hp":40,"df":216,"sd":252},"moves":["Scald","Heal Bell","Protect","Volt Switch"]},
-    "OU Showdown Usage": {"ability":"Volt Absorb","item":"Leftovers","nature":"Calm","evs":{"hp":76,"df":244,"sd":108},"moves":["Scald","Heal Bell","Volt Switch","Protect"]},
     "Battle Spot Triples Showdown Usage": {"level":50,"ability":"Water Absorb","item":"Sitrus Berry","nature":"Modest","evs":{"hp":252,"sa":252,"sd":4},"moves":["Surf","Thunder Wave","Dazzling Gleam","Thunderbolt"]}
   },
   "Cleffa": {
@@ -2667,6 +2668,7 @@ var SETDEX_XY = {
     "Battle Spot Doubles Dragon Dance": {"level":50,"ability":"Intimidate","item":"Salamencite","nature":"Adamant","evs":{"hp":4,"at":252,"sp":252},"moves":["Dragon Dance","Return","Earthquake","Protect"]},
     "Battle Spot Doubles Special": {"level":50,"ability":"Intimidate","item":"Salamencite","nature":"Timid","evs":{"hp":4,"sa":252,"sp":252},"moves":["Hyper Voice","Draco Meteor","Fire Blast","Protect"]},
     "Doubles OU Mixed Attacker": {"ability":"Intimidate","item":"Salamencite","nature":"Hasty","evs":{"at":176,"sa":80,"sp":252},"moves":["Double-Edge","Hyper Voice","Fire Blast","Protect"]},
+    "OU Showdown Usage": {"ability":"Intimidate","item":"Rocky Helmet","nature":"Bold","evs":{"hp":252,"df":236,"sp":20},"moves":["Roost","Flamethrower","Draco Meteor","Toxic"]},
     "Monotype Showdown Usage": {"ability":"Moxie","item":"Choice Scarf","nature":"Jolly","evs":{"at":252,"sd":4,"sp":252},"moves":["Earthquake","Outrage","Iron Tail","Dragon Claw"]},
     "Battle Spot Triples Showdown Usage": {"level":50,"ability":"Intimidate","item":"Salamencite","nature":"Modest","evs":{"hp":4,"sa":252,"sp":252},"moves":["Dragon Pulse","Flamethrower","Protect","Hyper Voice"]}
   },
@@ -4127,7 +4129,7 @@ var SETDEX_XY = {
     "LC Choice Scarf": {"level":5,"ability":"Defiant","item":"Choice Scarf","nature":"Jolly","evs":{"at":236,"df":36,"sd":36,"sp":196},"moves":["Knock Off","Iron Head","Pursuit","Brick Break"]}
   },
   "Bisharp": {
-    "OU Swords Dance": {"ability":"Defiant","item":"Life Orb","nature":"Adamant","evs":{"at":252,"df":4,"sp":252},"moves":["Knock Off","Swords Dance","Iron Head","Sucker Punch"]},
+    "OU Swords Dance": {"ability":"Defiant","item":"Black Glasses","nature":"Adamant","evs":{"at":252,"df":4,"sp":252},"moves":["Knock Off","Swords Dance","Iron Head","Sucker Punch"]},
     "OU Assault Vest": {"ability":"Defiant","item":"Assault Vest","nature":"Adamant","evs":{"hp":248,"at":252,"sd":8},"moves":["Pursuit","Sucker Punch","Iron Head","Knock Off"]},
     "Doubles OU All-Out Attacker": {"ability":"Defiant","item":"Life Orb","nature":"Adamant","evs":{"hp":4,"at":252,"sp":252},"moves":["Knock Off","Sucker Punch","Iron Head","Protect"]},
     "Battle Spot Doubles Standard": {"level":50,"ability":"Defiant","item":"Life Orb","nature":"Adamant","ivs":{"hp":29},"evs":{"at":252,"sd":4,"sp":252},"moves":["Sucker Punch","Knock Off","Iron Head","Protect"]},
@@ -4474,10 +4476,10 @@ var SETDEX_XY = {
     "RU Swords Dance": {"ability":"Gale Wings","nature":"Adamant","evs":{"hp":152,"at":252,"df":104},"moves":["Swords Dance","Acrobatics","Will-O-Wisp","Roost"]}
   },
   "Talonflame": {
-    "OU Choice Band": {"ability":"Gale Wings","item":"Choice Band","nature":"Adamant","evs":{"at":252,"df":4,"sp":252},"moves":["Brave Bird","Flare Blitz","U-turn","Will-O-Wisp"]},
-    "OU Bulky Swords Dance": {"ability":"Gale Wings","nature":"Adamant","evs":{"hp":248,"at":252,"df":8},"moves":["Acrobatics","Swords Dance","Roost","Will-O-Wisp"]},
-    "OU Specially Defensive": {"ability":"Gale Wings","item":"Leftovers","nature":"Careful","evs":{"hp":248,"df":8,"sd":252},"moves":["Brave Bird","Will-O-Wisp","Roost","Swords Dance"]},
+    "OU Bulky Swords Dance": {"ability":"Gale Wings","item":"Leftovers","nature":"Adamant","evs":{"hp":248,"at":192,"df":8,"sp":60},"moves":["Brave Bird","Swords Dance","Roost","Will-O-Wisp"]},
     "OU Offensive Swords Dance": {"ability":"Gale Wings","item":"Leftovers","nature":"Adamant","evs":{"at":252,"df":4,"sp":252},"moves":["Brave Bird","Swords Dance","Roost","Flare Blitz"]},
+    "OU Specially Defensive": {"ability":"Gale Wings","item":"Leftovers","nature":"Careful","evs":{"hp":248,"df":8,"sd":252},"moves":["Brave Bird","Will-O-Wisp","Roost","Swords Dance"]},
+    "OU Choice Band": {"ability":"Gale Wings","item":"Choice Band","nature":"Adamant","evs":{"at":252,"df":4,"sp":252},"moves":["Brave Bird","Flare Blitz","U-turn","Will-O-Wisp"]},
     "Doubles OU Gale Wings Attacker": {"ability":"Gale Wings","item":"Choice Band","nature":"Adamant","evs":{"hp":248,"at":252,"df":8},"moves":["Brave Bird","Flare Blitz","Sleep Talk"]},
     "VGC 2016 Offensive Support": {"level":50,"ability":"Gale Wings","item":"Life Orb","nature":"Adamant","evs":{"at":252,"sd":4,"sp":252},"moves":["Brave Bird","Flare Blitz","Tailwind","Quick Guard"]},
     "Battle Spot Triples Offensive Support": {"level":50,"ability":"Gale Wings","item":"Sharp Beak","nature":"Jolly","evs":{"hp":60,"at":196,"sp":252},"moves":["Brave Bird","Tailwind","Quick Guard","Snatch"]},

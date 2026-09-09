@@ -338,6 +338,7 @@ const SV = SS.concat([
   'Wind Rider',
   'Zero to Hero',
   // Champions exclusive
+  'Aura Guard',
   'Dragonize',
   'Eelevate',
   'Fire Mane',
@@ -355,6 +356,7 @@ const CHAMPIONS = [
   'Anticipation',
   'Armor Tail',
   'Aroma Veil',
+  'Aura Guard',
   'Battle Armor',
   'Berserk',
   'Big Pecks',
@@ -430,7 +432,6 @@ const CHAMPIONS = [
   'Levitate',
   'Light Metal',
   'Lightning Rod',
-  'Ligtning Rod',
   'Limber',
   'Liquid Voice',
   'Long Reach',

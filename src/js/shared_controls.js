@@ -274,7 +274,7 @@ $(".ability").bind("keyup change", function () {
 
 	var TOGGLE_ABILITIES = {
 		on: ['Intimidate', 'Slow Start', 'Teraform Zero'],
-		off: ['Flash Fire', 'Minus', 'Plus', 'Unburden', 'Analytic', 'Stakeout'],
+		off: ['Flash Fire', 'Minus', 'Plus', 'Unburden', 'Analytic', 'Stakeout', 'Electromorphosis'],
 	};
 
 	if (gen !== 8) {
@@ -373,7 +373,7 @@ function autosetWeather(ability, i) {
 		$("#sand").prop("checked", true);
 		break;
 	case "Snow Warning":
-		if (gen >= 9) {
+		if (gen === 0 || gen >= 9) {
 			lastAutoWeather[i] = "Snow";
 			$("#snow").prop("checked", true);
 		} else {
@@ -461,7 +461,6 @@ $(".teraType").change(function () {
 	stellarButtonsVisibility(pokeObj, $(this).val() === "Stellar" && checked);
 });
 
-var lockerMove = "";
 // auto-update move details on select
 $(".move-selector").change(function () {
 	var moveName = $(this).val();
@@ -1286,8 +1285,10 @@ function createField() {
 	var isLightScreen = [$("#lightScreenL").prop("checked"), $("#lightScreenR").prop("checked")];
 	var isProtected = [$("#protectL").prop("checked"), $("#protectR").prop("checked")];
 	var isSeeded = [$("#leechSeedL").prop("checked"), $("#leechSeedR").prop("checked")];
+	var isNightmared = [$("#nightmareL").prop("checked"), $("#nightmareR").prop("checked")];
 	var isSaltCured = [$("#saltCureL").prop("checked"), $("#saltCureR").prop("checked")];
 	var isForesight = [$("#foresightL").prop("checked"), $("#foresightR").prop("checked")];
+	var isCharge = [$("#chargeL").prop("checked"), $("#chargeR").prop("checked")];
 	var isHelpingHand = [$("#helpingHandL").prop("checked"), $("#helpingHandR").prop("checked")];
 	var isTailwind = [$("#tailwindL").prop("checked"), $("#tailwindR").prop("checked")];
 	var isFlowerGift = [$("#flowerGiftL").prop("checked"), $("#flowerGiftR").prop("checked")];
@@ -1313,8 +1314,10 @@ function createField() {
 			isLightScreen: isLightScreen[i],
 			isProtected: isProtected[i],
 			isSeeded: isSeeded[i],
+			isNightmared: isNightmared[i],
 			isSaltCured: isSaltCured[i],
 			isForesight: isForesight[i],
+			isCharge: isCharge[i],
 			isTailwind: isTailwind[i],
 			isHelpingHand: isHelpingHand[i],
 			isFlowerGift: isFlowerGift[i],

@@ -12,6 +12,7 @@ import type {Pokemon} from '../pokemon';
 import {Result} from '../result';
 import {
   chainMods,
+  checkAirLock,
   checkForecast,
   checkInfiltrator,
   checkIntimidate,
@@ -43,6 +44,8 @@ export function calculateChampions(
 ) {
   // #region Initial
 
+  checkAirLock(attacker, field);
+  checkAirLock(defender, field);
   checkForecast(attacker, field.weather);
   checkForecast(defender, field.weather);
   checkItem(attacker, field.isMagicRoom);
@@ -104,19 +107,19 @@ export function calculateChampions(
     'Armor Tail', 'Aroma Veil', 'Battle Armor', 'Big Pecks',
     'Bulletproof', 'Clear Body', 'Contrary', 'Damp',
     'Disguise', 'Dry Skin', 'Earth Eater', 'Eelevate',
-    'Filter', 'Flash Fire', 'Flower Veil', 'Friend Guard',
-    'Fur Coat', 'Heatproof', 'Heavy Metal', 'Hyper Cutter',
-    'Illuminate', 'Immunity', 'Inner Focus', 'Insomnia',
-    'Keen Eye', 'Leaf Guard', 'Levitate', 'Light Metal',
-    'Lightning Rod', 'Limber', 'Magic Bounce', 'Magma Armor',
-    'Marvel Scale', 'Mirror Armor', 'Motor Drive', 'Multiscale',
-    'Oblivious', 'Overcoat', 'Own Tempo', 'Purifying Salt',
-    'Queenly Majesty', 'Sand Veil', 'Sap Sipper', 'Shell Armor',
-    'Shield Dust', 'Snow Cloak', 'Solid Rock', 'Soundproof',
-    'Sticky Hold', 'Storm Drain', 'Sturdy', 'Sweet Veil',
-    'Tangled Feet', 'Telepathy', 'Thick Fat', 'Unaware',
-    'Vital Spirit', 'Volt Absorb', 'Water Absorb', 'Water Bubble',
-    'Water Veil', 'White Smoke'
+    'Filter', 'Flash Fire', 'Flower Veil', 'Fluffy',
+    'Friend Guard', 'Fur Coat', 'Heatproof', 'Heavy Metal',
+    'Hyper Cutter', 'Illuminate', 'Immunity', 'Inner Focus',
+    'Insomnia', 'Keen Eye', 'Leaf Guard', 'Levitate',
+    'Light Metal', 'Lightning Rod', 'Limber', 'Magic Bounce',
+    'Magma Armor', 'Marvel Scale', 'Mirror Armor', 'Motor Drive',
+    'Multiscale', 'Oblivious', 'Overcoat', 'Own Tempo',
+    'Purifying Salt', 'Queenly Majesty', 'Sand Veil', 'Sap Sipper',
+    'Shell Armor', 'Shield Dust', 'Snow Cloak', 'Solid Rock',
+    'Soundproof', 'Sticky Hold', 'Storm Drain', 'Sturdy',
+    'Sweet Veil', 'Tangled Feet', 'Telepathy', 'Thick Fat',
+    'Unaware', 'Vital Spirit', 'Volt Absorb', 'Water Absorb',
+    'Water Bubble', 'Water Veil', 'White Smoke'
   );
 
   const attackerIgnoresAbility = attacker.hasAbility('Mold Breaker');
@@ -128,7 +131,7 @@ export function calculateChampions(
 
   // Merciless does not ignore Shell Armor, damage dealt to a poisoned Pokemon with Shell Armor
   // will not be a critical hit (UltiMario)
-  const isCritical = !defender.hasAbility('Shell Armor') &&
+  const isCritical = !defender.hasAbility('Shell Armor', 'Battle Armor') &&
     (move.isCrit || (attacker.hasAbility('Merciless') && defender.hasStatus('psn', 'tox'))) &&
     move.timesUsed === 1;
 
@@ -183,6 +186,10 @@ export function calculateChampions(
     field.defenderSide.isReflect = false;
     field.defenderSide.isLightScreen = false;
     field.defenderSide.isAuroraVeil = false;
+  }
+
+  if (attacker.hasAbility('Electromorphosis') && attacker.abilityOn) {
+    field.attackerSide.isCharge = true;
   }
 
   let hasAteAbilityTypeChange = false;
@@ -540,6 +547,10 @@ export function calculateBasePowerChampions(
     basePower = move.bp * (defender.status ? 2 : 1);
     desc.moveBP = basePower;
     break;
+  case 'Barb Barrage':
+    basePower = move.bp * (defender.hasStatus('psn', 'tox') ? 2 : 1);
+    desc.moveBP = basePower;
+    break;
   case 'Heavy Slam':
   case 'Heat Crash':
     const wr =
@@ -719,6 +730,11 @@ export function calculateBPModsChampions(
   ) {
     bpMods.push(6144);
     desc.attackerAbility = attacker.ability;
+  }
+
+  if (field.attackerSide.isCharge && move.hasType('Electric')) {
+    bpMods.push(8192);
+    desc.isCharge = true;
   }
 
   const aura = `${move.type} Aura`;
@@ -1086,6 +1102,12 @@ export function calculateFinalModsChampions(
     desc.defenderAbility = defender.ability;
   }
 
+  const halveContactMoveDmg = defender.hasAbility('Fluffy') || defender.hasAbility('Aura Guard');
+  if (halveContactMoveDmg && move.flags.contact && !attacker.hasAbility('Long Reach')) {
+    finalMods.push(2048);
+    desc.defenderAbility = defender.ability;
+  }
+
   if (defender.hasAbility('Solid Rock', 'Filter') && typeEffectiveness > 1) {
     finalMods.push(3072);
     desc.defenderAbility = defender.ability;
@@ -1094,6 +1116,11 @@ export function calculateFinalModsChampions(
   if (field.defenderSide.isFriendGuard) {
     finalMods.push(3072);
     desc.isFriendGuard = true;
+  }
+
+  if (defender.hasAbility('Fluffy') && move.hasType('Fire')) {
+    finalMods.push(8192);
+    desc.defenderAbility = defender.ability;
   }
 
   if (attacker.hasItem('Expert Belt') && typeEffectiveness > 1) {
