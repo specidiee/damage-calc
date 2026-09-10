@@ -5485,10 +5485,7 @@ const CHAMPIONS_PATCH: {[name: string]: DeepPartial<MoveData>} = {
   'Slash': {bp: 80},
   'Snap Trap': {type: 'Steel'},
   'Snipe Shot': {bp: 85},
-  // pokemoem: M-C(2026-09-09) 밸런스 패치 — serebii attackdex-champions 대조
-  'Meteor Assault': {bp: 170},
-  'Slash': {bp: 80},
-  'Double Shock': {isPunch: true},
+  // pokemoem: M-C(2026-09-09) 밸런스 패치는 upstream 06cc6116 에 동일하게 들어와 여기선 제거
   'Spirit Shackle': {bp: 90},
   'Triple Dive': {bp: 35},
   'Trop Kick': {bp: 85},
